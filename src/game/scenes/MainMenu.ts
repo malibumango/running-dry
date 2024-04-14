@@ -1,19 +1,23 @@
+import { GameObjects, Scene } from 'phaser';
+
 import { EventBus } from '../EventBus';
-import { Scene } from 'phaser';
 
 export class MainMenu extends Scene {
-  logoTween;
+  background: GameObjects.Image;
+  logo: GameObjects.Image;
+  title: GameObjects.Text;
+  logoTween: Phaser.Tweens.Tween | null;
 
   constructor() {
     super('MainMenu');
   }
 
   create() {
-    this.add.image(512, 384, 'background');
+    this.background = this.add.image(512, 384, 'background');
 
     this.logo = this.add.image(512, 300, 'logo').setDepth(100);
 
-    this.add
+    this.title = this.add
       .text(512, 460, 'Main Menu', {
         fontFamily: 'Arial Black',
         fontSize: 38,
@@ -22,8 +26,8 @@ export class MainMenu extends Scene {
         strokeThickness: 8,
         align: 'center',
       })
-      .setDepth(100)
-      .setOrigin(0.5);
+      .setOrigin(0.5)
+      .setDepth(100);
 
     EventBus.emit('current-scene-ready', this);
   }
@@ -37,7 +41,7 @@ export class MainMenu extends Scene {
     this.scene.start('Game');
   }
 
-  moveLogo(reactCallback) {
+  moveLogo(vueCallback: ({ x, y }: { x: number; y: number }) => void) {
     if (this.logoTween) {
       if (this.logoTween.isPlaying()) {
         this.logoTween.pause();
@@ -52,8 +56,8 @@ export class MainMenu extends Scene {
         yoyo: true,
         repeat: -1,
         onUpdate: () => {
-          if (reactCallback) {
-            reactCallback({
+          if (vueCallback) {
+            vueCallback({
               x: Math.floor(this.logo.x),
               y: Math.floor(this.logo.y),
             });
