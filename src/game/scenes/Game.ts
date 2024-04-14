@@ -2,16 +2,22 @@ import { EventBus } from '../EventBus';
 import { Scene } from 'phaser';
 
 export class Game extends Scene {
+  camera: Phaser.Cameras.Scene2D.Camera;
+  background: Phaser.GameObjects.Image;
+  gameText: Phaser.GameObjects.Text;
+
   constructor() {
     super('Game');
   }
 
   create() {
-    this.cameras.main.setBackgroundColor(0x00ff00);
+    this.camera = this.cameras.main;
+    this.camera.setBackgroundColor(0x00ff00);
 
-    this.add.image(512, 384, 'background').setAlpha(0.5);
+    this.background = this.add.image(512, 384, 'background');
+    this.background.setAlpha(0.5);
 
-    this.add
+    this.gameText = this.add
       .text(
         512,
         384,
