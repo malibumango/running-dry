@@ -6,6 +6,7 @@ export class MainMenu extends Scene {
   background: GameObjects.Image;
   logo: GameObjects.Image;
   title: GameObjects.Text;
+  startGame: GameObjects.Text;
   logoTween: Phaser.Tweens.Tween | null;
 
   constructor() {
@@ -29,15 +30,59 @@ export class MainMenu extends Scene {
       .setOrigin(0.5)
       .setDepth(100);
 
+    const startGame = this.add
+      .text(512, 560, 'Start Game', {
+        fontFamily: 'Arial Black',
+        fontSize: 38,
+        color: '#ffffff',
+        stroke: '#000000',
+        strokeThickness: 4,
+        align: 'center',
+      })
+      .setOrigin(0.5)
+      .setDepth(100);
+
+    startGame.setInteractive();
+
+    startGame.on('pointerdown', () => {
+      this.changeSceneToGame();
+    });
+
+    const endGame = this.add
+      .text(512, 600, 'End Game', {
+        fontFamily: 'Arial Black',
+        fontSize: 38,
+        color: '#ffffff',
+        stroke: '#000000',
+        strokeThickness: 4,
+        align: 'center',
+      })
+      .setOrigin(0.5)
+      .setDepth(100);
+
+    endGame.setInteractive();
+
+    endGame.on('pointerdown', () => {
+      this.changeSceneToGame();
+    });
+
     EventBus.emit('current-scene-ready', this);
   }
 
-  changeScene() {
+  stopTween() {
     if (this.logoTween) {
       this.logoTween.stop();
       this.logoTween = null;
     }
+  }
 
+  changeSceneToGameOver() {
+    this.stopTween();
+    this.scene.start('GameOver');
+  }
+
+  changeSceneToGame() {
+    this.stopTween();
     this.scene.start('Game');
   }
 
