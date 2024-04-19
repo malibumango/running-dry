@@ -1,4 +1,5 @@
 import { GameObjects, Scene } from 'phaser';
+import { EventBus } from '../EventBus';
 
 const PADDING = 20;
 
@@ -69,7 +70,7 @@ export default class Menu extends Scene {
     if (menuPointSettings.onClick) {
       menuPoint.setInteractive();
       menuPoint.on('pointerdown', () => {
-        menuPointSettings.onClick();
+        menuPointSettings.onClick && menuPointSettings.onClick();
       });
     }
   }
@@ -94,5 +95,6 @@ export default class Menu extends Scene {
     if (this.title) {
       this.addTitle();
     }
+    EventBus.emit('current-scene-ready', this);
   }
 }

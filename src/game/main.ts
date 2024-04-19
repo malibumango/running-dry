@@ -18,6 +18,7 @@ const config: Phaser.Types.Core.GameConfig = {
 };
 
 const StartGame = (parent: string) => {
+  console.log('new game');
   return new Game({ ...config, parent });
 };
 

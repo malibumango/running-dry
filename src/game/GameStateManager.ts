@@ -6,6 +6,11 @@ export default class GameStateManager {
   private static _instance: GameStateManager;
   private game: Phaser.Game;
 
+  private constructor() {
+    console.log('build');
+    this.game = StartGame('game-container');
+  }
+
   private switchScene(currentScene: string, nextScene: string) {
     console.log('Moving from', currentScene, 'to', nextScene);
     //    this.game.scene.remove(currentScene);
@@ -25,15 +30,11 @@ export default class GameStateManager {
     this.switchScene(currentScene, MainMenu.SCENE_KEY);
   }
 
-  private constructor() {
-    this.game = StartGame('game-container');
-  }
-
   createWorld() {
     return new World();
   }
 
-  getScene() {
+  getGame() {
     return this.game;
   }
 

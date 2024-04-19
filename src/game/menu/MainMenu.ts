@@ -1,5 +1,4 @@
 import { GameObjects } from 'phaser';
-import { EventBus } from '../EventBus';
 import Menu from './Menu';
 import GameStateManager from '../GameStateManager';
 
@@ -49,8 +48,6 @@ export class MainMenu extends Menu {
     });
 
     this.addAllMenuPoints();
-
-    EventBus.emit('current-scene-ready', this);
   }
 
   changeSceneToGameOver() {
