@@ -79,7 +79,6 @@ export default class Menu extends Scene {
     if (this.menuPoints && this.menuPoints.length > 0) {
       const oldPosition = new Phaser.Math.Vector2(500, 500);
       this.menuPoints.forEach((menuPoint) => {
-        console.log('Pos is', oldPosition);
         if (!menuPoint.textStyle) {
           menuPoint.textStyle = DEFAULT_STYLE;
         }

@@ -7,7 +7,6 @@ export default class GameStateManager {
   private game: Phaser.Game;
 
   private constructor() {
-    console.log('build');
     this.game = StartGame('game-container');
   }
 
@@ -15,7 +14,7 @@ export default class GameStateManager {
    * Dynamically loads and unloads a scene
    */
   private switchScene(currentScene: string, nextScene: string) {
-    console.log('Moving from', currentScene, 'to', nextScene);
+    console.debug('Moving from', currentScene, 'to', nextScene);
     this.game.scene.remove(currentScene);
     if (!this.game.scene.getScene(nextScene)) {
       const sceneToLoad = sceneMap.filter(
@@ -24,11 +23,9 @@ export default class GameStateManager {
       this.game.scene.add(sceneToLoad.key, sceneToLoad.scene);
     }
     this.game.scene.start(nextScene);
-    console.log('Started');
   }
 
   public startGame(currentScene: string) {
-    console.log(World.SCENE_KEY);
     this.switchScene(currentScene, World.SCENE_KEY);
   }
 

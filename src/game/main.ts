@@ -45,7 +45,6 @@ export const sceneMap = [
 ];
 
 const StartGame = (parent: string) => {
-  console.log('new game');
   return new Game({ ...config, parent });
 };
 

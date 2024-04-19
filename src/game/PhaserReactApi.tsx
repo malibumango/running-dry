@@ -5,7 +5,6 @@ function PhaserReactApi() {
   const [game, setGame] = useState<Phaser.Game | null>(null!);
 
   useLayoutEffect(() => {
-    console.log('Layout Effect');
     if (game === null) {
       const gameState = GameStateManager.getInstance();
       setGame(gameState.getGame());
