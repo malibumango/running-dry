@@ -17,6 +17,33 @@ const config: Phaser.Types.Core.GameConfig = {
   scene: [Boot, Preloader, MainMenu, MainGame, GameOver, World],
 };
 
+export const sceneMap = [
+  {
+    key: 'Boot',
+    scene: Boot,
+  },
+  {
+    key: 'Preloader',
+    scene: Preloader,
+  },
+  {
+    key: 'MainMenu',
+    scene: MainMenu,
+  },
+  {
+    key: 'MainGame',
+    scene: MainGame,
+  },
+  {
+    key: 'GameOver',
+    scene: GameOver,
+  },
+  {
+    key: 'World',
+    scene: World,
+  },
+];
+
 const StartGame = (parent: string) => {
   console.log('new game');
   return new Game({ ...config, parent });

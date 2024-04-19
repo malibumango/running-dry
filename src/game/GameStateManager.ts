@@ -1,4 +1,4 @@
-import StartGame from './main';
+import StartGame, { sceneMap } from './main';
 import { MainMenu } from './menu/MainMenu';
 import World from './world/World';
 
@@ -11,12 +11,18 @@ export default class GameStateManager {
     this.game = StartGame('game-container');
   }
 
+  /**
+   * Dynamically loads and unloads a scene
+   */
   private switchScene(currentScene: string, nextScene: string) {
     console.log('Moving from', currentScene, 'to', nextScene);
-    //    this.game.scene.remove(currentScene);
-    //    if (this.game.scene.getScene(nextScene)) {
-    //      this.game.scene.add(nextScene, MainMenu);
-    //    }
+    this.game.scene.remove(currentScene);
+    if (!this.game.scene.getScene(nextScene)) {
+      const sceneToLoad = sceneMap.filter(
+        (scene) => scene.key === nextScene,
+      )[0];
+      this.game.scene.add(sceneToLoad.key, sceneToLoad.scene);
+    }
     this.game.scene.start(nextScene);
     console.log('Started');
   }
