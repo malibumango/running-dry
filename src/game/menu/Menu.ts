@@ -1,5 +1,7 @@
 import { GameObjects, Scene } from 'phaser';
 
+const PADDING = 20;
+
 export const DEFAULT_STYLE = {
   fontFamily: 'Arial Black',
   fontSize: 38,
@@ -9,11 +11,21 @@ export const DEFAULT_STYLE = {
   align: 'center',
 };
 
+export const DEFAULT_TITLE = {
+  fontFamily: 'Arial Black',
+  fontSize: 38,
+  color: '#ffffff',
+  stroke: '#000000',
+  strokeThickness: 8,
+  align: 'center',
+};
+
 export type MenuPointSettings = {
   title: string;
   textStyle?: Phaser.Types.GameObjects.Text.TextStyle;
   origin: number;
   depth: number;
+  onClick?: () => void;
 };
 
 export default class Menu extends Scene {
@@ -23,22 +35,17 @@ export default class Menu extends Scene {
   startGame: GameObjects.Text;
   logoTween: Phaser.Tweens.Tween | null;
 
-  constructor(sceneName: string, title: string, backgroundPath: string) {
+  public menuPoints: MenuPointSettings[] = [];
+
+  constructor(sceneName: string, backgroundPath: string, title?: string) {
     super(sceneName);
-    this.title = title;
+    this.title = title || '';
     this.backgroundPath = backgroundPath;
   }
 
   protected addTitle() {
     return this.add
-      .text(512, 460, this.title, {
-        fontFamily: 'Arial Black',
-        fontSize: 38,
-        color: '#ffffff',
-        stroke: '#000000',
-        strokeThickness: 8,
-        align: 'center',
-      })
+      .text(512, 460, this.title, DEFAULT_TITLE)
       .setOrigin(0.5)
       .setDepth(100);
   }
@@ -46,9 +53,8 @@ export default class Menu extends Scene {
   protected addMenuPoint(
     menuPointSettings: MenuPointSettings,
     position: Phaser.Math.Vector2,
-    onClick?: () => void,
   ) {
-    const startGame = this.add
+    const menuPoint = this.add
       .text(
         position.x,
         position.y,
@@ -60,10 +66,24 @@ export default class Menu extends Scene {
       .setOrigin(menuPointSettings.origin)
       .setDepth(menuPointSettings.depth);
 
-    if (onClick) {
-      startGame.setInteractive();
-      startGame.on('pointerdown', () => {
-        onClick();
+    if (menuPointSettings.onClick) {
+      menuPoint.setInteractive();
+      menuPoint.on('pointerdown', () => {
+        menuPointSettings.onClick();
+      });
+    }
+  }
+
+  addAllMenuPoints() {
+    if (this.menuPoints && this.menuPoints.length > 0) {
+      const oldPosition = new Phaser.Math.Vector2(500, 500);
+      this.menuPoints.forEach((menuPoint) => {
+        console.log('Pos is', oldPosition);
+        if (!menuPoint.textStyle) {
+          menuPoint.textStyle = DEFAULT_STYLE;
+        }
+        this.addMenuPoint(menuPoint, oldPosition);
+        oldPosition.y += 38 + PADDING;
       });
     }
   }
@@ -71,6 +91,8 @@ export default class Menu extends Scene {
   create() {
     this.background = this.add.image(512, 384, this.backgroundPath);
 
-    this.addTitle();
+    if (this.title) {
+      this.addTitle();
+    }
   }
 }

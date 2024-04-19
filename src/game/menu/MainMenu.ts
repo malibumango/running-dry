@@ -1,18 +1,20 @@
 import { GameObjects } from 'phaser';
 import { EventBus } from '../EventBus';
 import Menu from './Menu';
+import GameStateManager from '../GameStateManager';
 
 export class MainMenu extends Menu {
+  static SCENE_KEY = 'MainMenu';
   logo: GameObjects.Image;
 
   constructor() {
-    super('MainMenu', 'Main Menu', 'background');
+    super(MainMenu.SCENE_KEY, 'background', 'Main Menu');
   }
 
   create() {
     this.logo = this.add.image(512, 300, 'logo').setDepth(100);
 
-    const startGameSettings = {
+    this.menuPoints.push({
       title: 'Start Game',
       textStyle: {
         fontFamily: 'Arial Black',
@@ -24,15 +26,12 @@ export class MainMenu extends Menu {
       },
       origin: 0.5,
       depth: 100,
-    };
-
-    const startPosition = new Phaser.Math.Vector2(512, 560);
-
-    this.addMenuPoint(startGameSettings, startPosition, () => {
-      this.changeSceneToGame();
+      onClick: () => {
+        this.changeSceneToGame();
+      },
     });
 
-    const endGameSettings = {
+    this.menuPoints.push({
       title: 'End Game',
       textStyle: {
         fontFamily: 'Arial Black',
@@ -44,13 +43,12 @@ export class MainMenu extends Menu {
       },
       origin: 0.5,
       depth: 100,
-    };
-
-    const endGamePosition = new Phaser.Math.Vector2(512, 620);
-
-    this.addMenuPoint(endGameSettings, endGamePosition, () => {
-      this.changeSceneToGame();
+      onClick: () => {
+        this.changeSceneToGameOver();
+      },
     });
+
+    this.addAllMenuPoints();
 
     EventBus.emit('current-scene-ready', this);
   }
@@ -60,6 +58,6 @@ export class MainMenu extends Menu {
   }
 
   changeSceneToGame() {
-    this.scene.start('Game');
+    GameStateManager.getInstance().startGame(MainMenu.SCENE_KEY);
   }
 }

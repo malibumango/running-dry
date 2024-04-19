@@ -14,7 +14,7 @@ export const PhaserReactApi = forwardRef<IRefPhaserGame, IProps>(
 
     useLayoutEffect(() => {
       if (game.current === null) {
-        const gameState = new GameStateManager();
+        const gameState = GameStateManager.getInstance();
         game.current = gameState.getScene();
 
         if (typeof ref === 'function') {
