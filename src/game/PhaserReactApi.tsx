@@ -1,5 +1,5 @@
 import { forwardRef, useLayoutEffect, useRef } from 'react';
-import StartGame from './main';
+import GameStateManager from './GameStateManager';
 
 export interface IRefPhaserGame {
   game: Phaser.Game | null;
@@ -8,13 +8,14 @@ export interface IRefPhaserGame {
 
 interface IProps {}
 
-export const GameStateManager = forwardRef<IRefPhaserGame, IProps>(
+export const PhaserReactApi = forwardRef<IRefPhaserGame, IProps>(
   function PhaserGame({}, ref) {
     const game = useRef<Phaser.Game | null>(null!);
 
     useLayoutEffect(() => {
       if (game.current === null) {
-        game.current = StartGame('game-container');
+        const gameState = new GameStateManager();
+        game.current = gameState.getScene();
 
         if (typeof ref === 'function') {
           ref({ game: game.current, scene: null });

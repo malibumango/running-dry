@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { IRefPhaserGame, GameStateManager } from './game/GameStateManager';
+import { IRefPhaserGame, PhaserReactApi } from './game/PhaserReactApi';
 
 function App() {
   //  References to the PhaserGame component (game and scene are exposed)
@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div id="app">
-      <GameStateManager ref={phaserRef} />
+      <PhaserReactApi ref={phaserRef} />
     </div>
   );
 }
