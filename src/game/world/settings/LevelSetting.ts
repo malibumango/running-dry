@@ -3,9 +3,15 @@ type Dimensions = {
   area: Phaser.Math.Vector2;
 };
 
+type DimensionsWithTexture = {
+  origin: Phaser.Math.Vector2;
+  scale: Phaser.Math.Vector2;
+  texture: string;
+};
+
 export default class LevelSetting {
   // Dummy platform create
-  public platform: Dimensions;
+  public platforms: DimensionsWithTexture[];
   public spawnPoint: Phaser.Math.Vector2;
   public backgroundPath: string | undefined;
   public backgroundMusicPath: string | undefined;
@@ -15,10 +21,13 @@ export default class LevelSetting {
 
   constructor() {
     console.debug("Created");
-    this.platform = {
-      origin: new Phaser.Math.Vector2(0, 1),
-      area: new Phaser.Math.Vector2(10, 1),
-    };
+    this.platforms = [
+      {
+        origin: new Phaser.Math.Vector2(1000, 300),
+        scale: new Phaser.Math.Vector2(100, 1),
+        texture: "sandMiddle",
+      },
+    ];
 
     this.spawnPoint = new Phaser.Math.Vector2(1, 2);
 

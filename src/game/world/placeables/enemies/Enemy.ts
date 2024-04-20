@@ -1,6 +1,6 @@
 import Placeable from "../Placeables";
 
-export default abstract class InteractiveObject implements Placeable {
+export default abstract class Enemy implements Placeable {
   origin: Phaser.Math.Vector2;
   texture: string;
 

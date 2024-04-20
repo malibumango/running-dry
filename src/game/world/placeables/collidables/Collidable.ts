@@ -1,17 +1,20 @@
 import Placeable from "../Placeables";
 
 export default abstract class Collidable implements Placeable {
-  coordinate: Phaser.Math.Vector2;
-  texture: Phaser.Textures.Texture;
+  origin: Phaser.Math.Vector2;
+  texture: string;
+  scene: Phaser.Scene;
 
   abstract render(): void;
   abstract unrender(): void;
 
   constructor(
-    coordinate: Phaser.Math.Vector2,
-    texture: Phaser.Textures.Texture
+    origin: Phaser.Math.Vector2,
+    texture: string,
+    scene: Phaser.Scene
   ) {
-    this.coordinate = coordinate;
+    this.origin = origin;
     this.texture = texture;
+    this.scene = scene;
   }
 }

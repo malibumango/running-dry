@@ -10,7 +10,7 @@ export default class World extends Scene {
 
   private currentLevel: number;
 
-  private levels: Array<Level> | undefined;
+  private levels: Array<Level> = [];
 
   constructor() {
     super(World.SCENE_KEY);
@@ -42,6 +42,7 @@ export default class World extends Scene {
   private loadLevel(levelToLoad: number) {
     // TODO
     const level = this.levels && this.levels[levelToLoad];
+    level.renderLevel();
   }
 
   private loadNextLevel() {
@@ -50,6 +51,9 @@ export default class World extends Scene {
 
   init(data: WorldSetting) {
     this.worldSettings = data;
+    this.worldSettings.level.forEach((levelSetting) => {
+      this.levels.push(new Level(levelSetting, this));
+    });
   }
 
   create() {
@@ -59,7 +63,7 @@ export default class World extends Scene {
       this.returnToMainMenu();
     }
 
-    const text = this.add.text(100, 100, "foobar", {
+    const text = this.add.text(0, 0, "Main Menu", {
       fontFamily: "Arial Black",
       fontSize: 38,
       color: "#ffffff",
@@ -71,5 +75,7 @@ export default class World extends Scene {
     text.on("pointerdown", () => {
       GameStateManager.getInstance().openMainMenu(World.SCENE_KEY);
     });
+
+    this.loadNextLevel();
   }
 }
