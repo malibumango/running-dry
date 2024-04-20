@@ -23,7 +23,7 @@ export default class LevelSetting {
     console.debug("Created");
     this.platforms = [
       {
-        origin: new Phaser.Math.Vector2(1, 768 - 64),
+        origin: new Phaser.Math.Vector2(0, 768 - 64),
         area: new Phaser.Math.Vector2(100, 64),
         texture: "sandMiddle",
       },
@@ -32,10 +32,14 @@ export default class LevelSetting {
         area: new Phaser.Math.Vector2(100, 64),
         texture: "sandMiddle",
       },
-
       {
         origin: new Phaser.Math.Vector2(150, 668 - 64),
         area: new Phaser.Math.Vector2(50, 64),
+        texture: "sandMiddle",
+      },
+      {
+        origin: new Phaser.Math.Vector2(250, 668 - 64),
+        area: new Phaser.Math.Vector2(100, 1),
         texture: "sandMiddle",
       },
     ];
