@@ -13,9 +13,22 @@ const config: Phaser.Types.Core.GameConfig = {
   type: AUTO,
   width: 1024,
   height: 768,
+  scale: {
+    // Fit to window
+    mode: Phaser.Scale.FIT,
+    // Center vertically and horizontally
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+  },
   parent: "game-container",
   backgroundColor: "#028af8",
-  scene: [Boot, Preloader, MainMenu, MainGame, GameOver, World],
+  physics: {
+    default: "arcade",
+    arcade: {
+      gravity: { x: 0, y: 300 },
+      debug: false,
+    },
+  },
+  scene: [Boot, Preloader, MainMenu],
 };
 
 export const sceneMap = [
