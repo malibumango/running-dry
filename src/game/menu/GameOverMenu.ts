@@ -2,19 +2,19 @@ import { GameObjects } from "phaser";
 import Menu from "./Menu";
 import GameStateManager from "../GameStateManager";
 
-export class MainMenu extends Menu {
-  static SCENE_KEY = "MainMenu";
+export class GameOverMenu extends Menu {
+  static SCENE_KEY = "GameOverMenu";
   private logo: GameObjects.Image | undefined;
 
   constructor() {
-    super(MainMenu.SCENE_KEY, "background", "Main Menu");
+    super(GameOverMenu.SCENE_KEY, "background", "Game Over Menu");
   }
 
   create() {
     this.logo = this.add.image(512, 300, "logo").setDepth(100);
 
     this.menuPoints.push({
-      title: "Start Game",
+      title: "Continue",
       textStyle: {
         fontFamily: "Arial Black",
         fontSize: 38,
@@ -26,12 +26,12 @@ export class MainMenu extends Menu {
       origin: 0.5,
       depth: 100,
       onClick: () => {
-        this.changeSceneToGameOverMenu();
+        this.changeSceneToMainMenu();
       },
     });
 
     this.menuPoints.push({
-      title: "Credits",
+      title: "Restart Level",
       textStyle: {
         fontFamily: "Arial Black",
         fontSize: 38,
@@ -43,12 +43,12 @@ export class MainMenu extends Menu {
       origin: 0.5,
       depth: 100,
       onClick: () => {
-        this.changeSceneToGameOverMenu();
+        this.changeSceneToMainMenu();
       },
     });
 
     this.menuPoints.push({
-      title: "Options",
+      title: "Back to Main Menu",
       textStyle: {
         fontFamily: "Arial Black",
         fontSize: 38,
@@ -60,18 +60,17 @@ export class MainMenu extends Menu {
       origin: 0.5,
       depth: 100,
       onClick: () => {
-        this.changeSceneToGameOverMenu();
+        this.changeSceneToMainMenu();
       },
     });
 
     this.addAllMenuPoints();
   }
-
-  changeSceneToGameOverMenu() {
-    GameStateManager.getInstance().openGameOverMenu(MainMenu.SCENE_KEY);
+  changeSceneToMainMenu() {
+    GameStateManager.getInstance().openMainMenu(GameOverMenu.SCENE_KEY);
   }
 
   changeSceneToGame() {
-    GameStateManager.getInstance().startGame(MainMenu.SCENE_KEY);
+    GameStateManager.getInstance().openMainMenu(GameOverMenu.SCENE_KEY);
   }
 }

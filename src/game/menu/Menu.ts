@@ -1,24 +1,24 @@
-import { GameObjects, Scene } from 'phaser';
-import { EventBus } from '../EventBus';
+import { GameObjects, Scene } from "phaser";
+import { EventBus } from "../EventBus";
 
 const PADDING = 20;
 
 export const DEFAULT_STYLE = {
-  fontFamily: 'Arial Black',
+  fontFamily: "Arial Black",
   fontSize: 38,
-  color: '#ffffff',
-  stroke: '#000000',
+  color: "#ffffff",
+  stroke: "#000000",
   strokeThickness: 4,
-  align: 'center',
+  align: "center",
 };
 
 export const DEFAULT_TITLE = {
-  fontFamily: 'Arial Black',
+  fontFamily: "Arial Black",
   fontSize: 38,
-  color: '#ffffff',
-  stroke: '#000000',
+  color: "#ffffff",
+  stroke: "#000000",
   strokeThickness: 8,
-  align: 'center',
+  align: "center",
 };
 
 export type MenuPointSettings = {
@@ -30,17 +30,17 @@ export type MenuPointSettings = {
 };
 
 export default class Menu extends Scene {
-  background: GameObjects.Image;
+  background: GameObjects.Image | undefined;
   backgroundPath: string;
   title: string;
-  startGame: GameObjects.Text;
-  logoTween: Phaser.Tweens.Tween | null;
+  startGame: GameObjects.Text | undefined;
+  logoTween: Phaser.Tweens.Tween | null | undefined;
 
   public menuPoints: MenuPointSettings[] = [];
 
   constructor(sceneName: string, backgroundPath: string, title?: string) {
     super(sceneName);
-    this.title = title || '';
+    this.title = title || "";
     this.backgroundPath = backgroundPath;
   }
 
@@ -53,7 +53,7 @@ export default class Menu extends Scene {
 
   protected addMenuPoint(
     menuPointSettings: MenuPointSettings,
-    position: Phaser.Math.Vector2,
+    position: Phaser.Math.Vector2
   ) {
     const menuPoint = this.add
       .text(
@@ -62,14 +62,14 @@ export default class Menu extends Scene {
         menuPointSettings.title,
         menuPointSettings.textStyle
           ? menuPointSettings.textStyle
-          : DEFAULT_STYLE,
+          : DEFAULT_STYLE
       )
       .setOrigin(menuPointSettings.origin)
       .setDepth(menuPointSettings.depth);
 
     if (menuPointSettings.onClick) {
       menuPoint.setInteractive();
-      menuPoint.on('pointerdown', () => {
+      menuPoint.on("pointerdown", () => {
         menuPointSettings.onClick && menuPointSettings.onClick();
       });
     }
@@ -94,6 +94,6 @@ export default class Menu extends Scene {
     if (this.title) {
       this.addTitle();
     }
-    EventBus.emit('current-scene-ready', this);
+    EventBus.emit("current-scene-ready", this);
   }
 }

@@ -1,24 +1,25 @@
-import StartGame, { sceneMap } from './main';
-import { MainMenu } from './menu/MainMenu';
-import World from './world/World';
+import StartGame, { sceneMap } from "./main";
+import { GameOverMenu } from "./menu/GameOverMenu";
+import { MainMenu } from "./menu/MainMenu";
+import World from "./world/World";
 
 export default class GameStateManager {
   private static _instance: GameStateManager;
   private game: Phaser.Game;
 
   private constructor() {
-    this.game = StartGame('game-container');
+    this.game = StartGame("game-container");
   }
 
   /**
    * Dynamically loads and unloads a scene
    */
   private switchScene(currentScene: string, nextScene: string) {
-    console.debug('Moving from', currentScene, 'to', nextScene);
+    console.debug("Moving from", currentScene, "to", nextScene);
     this.game.scene.remove(currentScene);
     if (!this.game.scene.getScene(nextScene)) {
       const sceneToLoad = sceneMap.filter(
-        (scene) => scene.key === nextScene,
+        (scene) => scene.key === nextScene
       )[0];
       this.game.scene.add(sceneToLoad.key, sceneToLoad.scene);
     }
@@ -31,6 +32,10 @@ export default class GameStateManager {
 
   public openMainMenu(currentScene: string) {
     this.switchScene(currentScene, MainMenu.SCENE_KEY);
+  }
+
+  public openGameOverMenu(currentScene: string) {
+    this.switchScene(currentScene, GameOverMenu.SCENE_KEY);
   }
 
   createWorld() {
