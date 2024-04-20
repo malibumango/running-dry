@@ -1,5 +1,6 @@
 import StartGame, { sceneMap } from "./main";
 import { MainMenu } from "./menu/MainMenu";
+import { GameOverMenu } from "./menu/GameOverMenu";
 import World from "./world/World";
 import WorldSetting from "./world/settings/WorldSetting";
 
@@ -20,24 +21,13 @@ export default class GameStateManager {
   /**
    * Dynamically loads and unloads a scene
    */
-  private switchScene(
-    currentScene: string,
-    nextScene: string,
-    customSettings?: any
-  ) {
+  private switchScene(currentScene: string, nextScene: string, customSettings?: any) {
     console.debug("Moving from", currentScene, "to", nextScene);
     this.game.scene.remove(currentScene);
     if (!this.game.scene.getScene(nextScene)) {
-      const sceneToLoad = sceneMap.filter(
-        (scene) => scene.key === nextScene
-      )[0];
+      const sceneToLoad = sceneMap.filter((scene) => scene.key === nextScene)[0];
       console.debug("Custom settings are", customSettings);
-      this.game.scene.add(
-        sceneToLoad.key,
-        sceneToLoad.scene,
-        true,
-        customSettings
-      );
+      this.game.scene.add(sceneToLoad.key, sceneToLoad.scene, true, customSettings);
     }
     this.game.scene.start(nextScene);
   }
@@ -50,6 +40,9 @@ export default class GameStateManager {
     this.switchScene(currentScene, MainMenu.SCENE_KEY);
   }
 
+  public openGameOverMenu(currentScene: string) {
+    this.switchScene(currentScene, GameOverMenu.SCENE_KEY);
+  }
   getWorldSettings() {
     return new WorldSetting();
   }

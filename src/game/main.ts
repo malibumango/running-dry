@@ -2,6 +2,7 @@ import { Boot } from "./scenes/Boot";
 import { GameOver } from "./scenes/GameOver";
 import { Game as MainGame } from "./scenes/Game";
 import { MainMenu } from "./menu/MainMenu";
+import { GameOverMenu } from "./menu/GameOverMenu";
 import World from "./world/World";
 import { AUTO, Game } from "phaser";
 import { Preloader } from "./scenes/Preloader";
@@ -54,6 +55,10 @@ export const sceneMap = [
   {
     key: "World",
     scene: World,
+  },
+  {
+    key: "GameOverMenu",
+    scene: GameOverMenu,
   },
 ];
 
