@@ -26,12 +26,12 @@ export class GameOverMenu extends Menu {
       origin: 0.5,
       depth: 100,
       onClick: () => {
-        this.changeSceneToGame();
+        this.changeSceneToMainMenu();
       },
     });
 
     this.menuPoints.push({
-      title: "Restart",
+      title: "Restart Level",
       textStyle: {
         fontFamily: "Arial Black",
         fontSize: 38,
@@ -43,12 +43,12 @@ export class GameOverMenu extends Menu {
       origin: 0.5,
       depth: 100,
       onClick: () => {
-        this.changeSceneToGame();
+        this.changeSceneToMainMenu();
       },
     });
 
     this.menuPoints.push({
-      title: "End game",
+      title: "Back to Main Menu",
       textStyle: {
         fontFamily: "Arial Black",
         fontSize: 38,
@@ -67,10 +67,10 @@ export class GameOverMenu extends Menu {
     this.addAllMenuPoints();
   }
   changeSceneToMainMenu() {
-    this.scene.start("MainMenu");
+    GameStateManager.getInstance().openMainMenu(GameOverMenu.SCENE_KEY);
   }
 
   changeSceneToGame() {
-    GameStateManager.getInstance().startGame(GameOverMenu.SCENE_KEY);
+    GameStateManager.getInstance().openMainMenu(GameOverMenu.SCENE_KEY);
   }
 }

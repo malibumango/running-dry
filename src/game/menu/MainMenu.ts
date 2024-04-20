@@ -26,12 +26,29 @@ export class MainMenu extends Menu {
       origin: 0.5,
       depth: 100,
       onClick: () => {
-        this.changeSceneToGame();
+        this.changeSceneToGameOverMenu();
       },
     });
 
     this.menuPoints.push({
-      title: "Game Over Menu",
+      title: "Credits",
+      textStyle: {
+        fontFamily: "Arial Black",
+        fontSize: 38,
+        color: "#ffffff",
+        stroke: "#000000",
+        strokeThickness: 4,
+        align: "center",
+      },
+      origin: 0.5,
+      depth: 100,
+      onClick: () => {
+        this.changeSceneToGameOverMenu();
+      },
+    });
+
+    this.menuPoints.push({
+      title: "Options",
       textStyle: {
         fontFamily: "Arial Black",
         fontSize: 38,
