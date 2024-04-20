@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import GameStateManager from './GameStateManager';
 
 function PhaserReactApi() {

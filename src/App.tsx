@@ -1,3 +1,4 @@
+import React from 'react';
 import PhaserReactApi from './game/PhaserReactApi';
 
 function App() {
