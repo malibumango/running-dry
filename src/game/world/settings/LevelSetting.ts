@@ -3,9 +3,7 @@ type Dimensions = {
   area: Phaser.Math.Vector2;
 };
 
-type DimensionsWithTexture = {
-  origin: Phaser.Math.Vector2;
-  area: Phaser.Math.Vector2;
+type DimensionsWithTexture = Dimensions & {
   texture: string;
 };
 

@@ -1,14 +1,10 @@
-import InteractiveObject from "./InteractiveObject";
+import Interactable from "./InteractiveObject";
 
-export default class ChargeStation extends InteractiveObject {
-  constructor(
-    coordinate: Phaser.Math.Vector2,
-    texture: Phaser.Textures.Texture
-  ) {
-    super(coordinate, texture);
+export default class ChargeStation extends Interactable {
+  constructor(coordinate: Phaser.Math.Vector2, texture: string, scene: Phaser.Scene) {
+    super(coordinate, texture, scene);
   }
 
   render() {}
-
   unrender() {}
 }

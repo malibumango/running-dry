@@ -43,6 +43,7 @@ export default class GameStateManager {
   public openGameOverMenu(currentScene: string) {
     this.switchScene(currentScene, GameOverMenu.SCENE_KEY);
   }
+
   getWorldSettings() {
     return new WorldSetting();
   }

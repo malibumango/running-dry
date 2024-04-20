@@ -33,10 +33,9 @@ export default class World extends Scene {
 
   getTotalChargeStations() {
     if (this.levels && this.levels !== undefined) {
-      const sum = this.levels
-        .map((levels) => levels.getAmountChargeStations())
-        .reduce((previous, now) => previous + now, 0);
+      return this.levels.map((levels) => levels.getAmountChargeStations()).reduce((previous, now) => previous + now, 0);
     }
+    return 0;
   }
 
   private loadLevel(levelToLoad: number) {
@@ -46,7 +45,7 @@ export default class World extends Scene {
   }
 
   private loadNextLevel() {
-    this.loadLevel(this.currentLevel + 1);
+    this.loadLevel(++this.currentLevel);
   }
 
   init(data: WorldSetting) {

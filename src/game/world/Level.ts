@@ -1,12 +1,12 @@
 import { Scene } from "phaser";
-import InteractiveObject from "./placeables/interactables/InteractiveObject";
+import Interactable from "./placeables/interactables/InteractiveObject";
 import LevelSetting from "./settings/LevelSetting";
 import Collidable from "./placeables/collidables/Collidable";
 import Enemy from "./placeables/enemies/Enemy";
 import Platform from "./placeables/collidables/Platform";
 
 export default class Level {
-  public interactives: Array<InteractiveObject> = [];
+  public interactives: Array<Interactable> = [];
   public collidables: Array<Collidable> = [];
   public enemies: Array<Enemy> = [];
   private levelSettings: LevelSetting;
@@ -22,18 +22,13 @@ export default class Level {
 
   parseCollidables() {
     this.levelSettings.platforms.forEach((platformSetting, index) => {
-      const platform = new Platform(
-        platformSetting.origin,
-        platformSetting.texture,
-        this.scene,
-        platformSetting.area
-      );
+      const platform = new Platform(platformSetting.origin, platformSetting.texture, this.scene, platformSetting.area);
       // platform.name = `platform${index}`;
       this.collidables.push(platform);
     });
   }
 
-  createCollidabes() {
+  createCollidables() {
     this.collidables.forEach((collidable) => {
       collidable.render();
     });
@@ -46,7 +41,7 @@ export default class Level {
   }
 
   renderLevel() {
-    this.createCollidabes();
+    this.createCollidables();
     this.createInteractables();
     this.createEnemies();
   }

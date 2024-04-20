@@ -13,7 +13,7 @@ export default class Platform extends Collidable {
   render() {
     // Group can take a config describing the classType which is usually a Sprite
     this.platformGroup = this.scene.physics.add.staticGroup({
-      name: "platformGroup",
+      // name: "platformGroup",
       // classType: Phaser.GameObjects.Image,
     });
 
@@ -23,7 +23,5 @@ export default class Platform extends Collidable {
       .refreshBody();
   }
 
-  unrender() {
-    this.platformGroup;
-  }
+  unrender() {}
 }
