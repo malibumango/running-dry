@@ -3,6 +3,9 @@ import { MainMenu } from "./menu/MainMenu";
 import World from "./world/World";
 import WorldSetting from "./world/settings/WorldSetting";
 
+export const SPRITE_SIZE_X = 64;
+export const SPRITE_SIZE_Y = 64;
+
 export default class GameStateManager {
   private static _instance: GameStateManager;
   private game: Phaser.Game;

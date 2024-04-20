@@ -26,7 +26,7 @@ export default class Level {
         platformSetting.origin,
         platformSetting.texture,
         this.scene,
-        platformSetting.scale
+        platformSetting.area
       );
       // platform.name = `platform${index}`;
       this.collidables.push(platform);

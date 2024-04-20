@@ -5,7 +5,7 @@ type Dimensions = {
 
 type DimensionsWithTexture = {
   origin: Phaser.Math.Vector2;
-  scale: Phaser.Math.Vector2;
+  area: Phaser.Math.Vector2;
   texture: string;
 };
 
@@ -23,17 +23,25 @@ export default class LevelSetting {
     console.debug("Created");
     this.platforms = [
       {
-        origin: new Phaser.Math.Vector2(1000, 300),
-        scale: new Phaser.Math.Vector2(100, 1),
+        origin: new Phaser.Math.Vector2(1, 768 - 64),
+        area: new Phaser.Math.Vector2(100, 64),
+        texture: "sandMiddle",
+      },
+      {
+        origin: new Phaser.Math.Vector2(200, 768 - 64),
+        area: new Phaser.Math.Vector2(100, 64),
+        texture: "sandMiddle",
+      },
+
+      {
+        origin: new Phaser.Math.Vector2(150, 668 - 64),
+        area: new Phaser.Math.Vector2(50, 64),
         texture: "sandMiddle",
       },
     ];
 
     this.spawnPoint = new Phaser.Math.Vector2(1, 2);
 
-    this.chargingStations = [
-      new Phaser.Math.Vector2(5, 1),
-      new Phaser.Math.Vector2(10, 1),
-    ];
+    this.chargingStations = [new Phaser.Math.Vector2(5, 1), new Phaser.Math.Vector2(10, 1)];
   }
 }
