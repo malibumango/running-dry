@@ -1,14 +1,20 @@
 import { Scene } from "phaser";
 import GameStateManager from "../GameStateManager";
-import WorldSettings from "./settings/WorldSettings";
+import WorldSetting from "./settings/WorldSetting";
+import Level from "./Level";
 
 export default class World extends Scene {
   public static SCENE_KEY = "World";
 
-  private worldSettings: WorldSettings | undefined;
+  private worldSettings: WorldSetting | undefined;
+
+  private currentLevel: number;
+
+  private levels: Array<Level> | undefined;
 
   constructor() {
     super(World.SCENE_KEY);
+    this.currentLevel = 0;
   }
 
   private returnToMainMenu() {
@@ -25,14 +31,31 @@ export default class World extends Scene {
     }, 3000);
   }
 
-  init(data: WorldSettings) {
+  getTotalChargeStations() {
+    if (this.levels && this.levels !== undefined) {
+      const sum = this.levels
+        .map((levels) => levels.getAmountChargeStations())
+        .reduce((previous, now) => previous + now, 0);
+    }
+  }
+
+  private loadLevel(levelToLoad: number) {
+    // TODO
+    const level = this.levels && this.levels[levelToLoad];
+  }
+
+  private loadNextLevel() {
+    this.loadLevel(this.currentLevel + 1);
+  }
+
+  init(data: WorldSetting) {
     this.worldSettings = data;
   }
 
   create() {
     console.debug("data is", this.worldSettings);
 
-    if (!this.worldSettings || !(this.worldSettings instanceof WorldSettings)) {
+    if (!this.worldSettings || !(this.worldSettings instanceof WorldSetting)) {
       this.returnToMainMenu();
     }
 
