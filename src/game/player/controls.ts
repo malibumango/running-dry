@@ -5,43 +5,55 @@ export default class Controls {
   private inputManager: Phaser.Input.InputManager;
 
   constructor(inputManager: Phaser.Input.InputManager) {
+    console.log('Key down', inputManager);
     this.movement = new Movement();
     this.inputManager = inputManager;
     this.setupInputManager();
   }
 
   setupInputManager() {
-    const keyBoardManager = this.inputManager.keyboard;
-    keyBoardManager.addCapture('S,A,D,E,SPACE,SHIFT,ESC');
+    const keyBoardPlugin = this.inputManager.keyboard
+      ? this.inputManager.keyboard
+      : new Phaser.Input.Keyboard.KeyboardManager(this.inputManager);
+    keyBoardPlugin.addCapture('W,S,A,D,E,SPACE,SHIFT,ESC');
+    console.log('Key down', keyBoardPlugin);
 
-    this.inputManager.keyboard.createCursorKeys();
+      keyBoardPlugin.on('keydown', (event: KeyboardEvent)=> {
+      console.log('Key up', event);
+      this.handleKey(event, true);
+    })
 
-    keyboardManager.onKeyDown = (event) => this.handleKey(event, true);
-    keyboardManager.onKeyUp = (event) => this.handleKey(event, false);
+    keyBoardPlugin.on('keydown', (event: KeyboardEvent)=> {
+      console.log('Key up', event);
+      this.handleKey(event, false);
+    })
   }
 
-  handleKey(event, state) {
+  handleKey(event: KeyboardEvent, state: boolean) {
     const keyName = event.key;
+    if (keyName === 'W') {
+      this.movement.up = state;
+    }
     if (keyName === 'S') {
-      this.movement.slide.triggered = state;
+      this.movement.crouch = state;
     }
     if (keyName === 'A') {
-      this.movement.left.triggered = state;
+      this.movement.left = state;
     }
     if (keyName === 'D') {
-      this.movement.right.triggered = state;
+      this.movement.right = state;
     }
     if (keyName === 'E') {
-      this.movement.use.triggered = state;
+      this.movement.use = state;
     }
     if (keyName === 'SPACE') {
-      this.movement.jump.triggered = state;
+      this.movement.jump = state;
     }
     if (keyName === 'SHIFT') {
-      this.movement.run.triggered = state;
+      this.movement.run = state;
     }
     if (keyName === 'ESC') {
-      this.movement.pause.triggered = state;
+      this.movement.pause = state;
     }
   }
 

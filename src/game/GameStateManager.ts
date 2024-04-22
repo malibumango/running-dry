@@ -3,15 +3,18 @@ import { MainMenu } from './menu/MainMenu';
 import { GameOverMenu } from './menu/GameOverMenu';
 import World from './world/World';
 import Controls from './player/controls';
+import Player from './player/player';
 import WorldSetting from './world/settings/WorldSetting';
 
 export const SPRITE_SIZE_X = 64;
 export const SPRITE_SIZE_Y = 64;
+export const MAX_ENERGY = 100;
 
 export default class GameStateManager {
   private static _instance: GameStateManager;
   private game: Phaser.Game;
   private controls: Controls;
+  private mfplayer: Player;
 
   private worldSettings: WorldSetting;
 
@@ -19,6 +22,11 @@ export default class GameStateManager {
     this.game = StartGame('game-container');
     this.worldSettings = this.getWorldSettings();
     this.controls = new Controls(this.game.input);
+    this.mfplayer = new Player(MAX_ENERGY, MAX_ENERGY);
+    this.game.loop.callback = (time, average) => {
+      const move = this.controls.getMovement();
+      this.mfplayer.applyMovement(move);
+    };
   }
 
   /**
