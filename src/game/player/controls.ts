@@ -1,58 +1,59 @@
-import Movement from './movement';
+import { Input } from "phaser";
+import Movement from "./movement";
 
 export default class Controls {
   private movement: Movement;
-  private inputManager: Phaser.Input.InputManager;
+  private inputPlugin: Phaser.Input.InputPlugin;
 
-  constructor(inputManager: Phaser.Input.InputManager) {
-    console.log('Key down', inputManager);
+  constructor(inputPlugin: Phaser.Input.InputPlugin) {
+    console.log("Key down", inputPlugin);
     this.movement = new Movement();
-    this.inputManager = inputManager;
+    this.inputPlugin = inputPlugin;
     this.setupInputManager();
   }
 
   setupInputManager() {
-    const keyBoardPlugin = this.inputManager.keyboard
-      ? this.inputManager.keyboard
-      : new Phaser.Input.Keyboard.KeyboardManager(this.inputManager);
-    keyBoardPlugin.addCapture('W,S,A,D,E,SPACE,SHIFT,ESC');
-    console.log('Key down', keyBoardPlugin);
+    const keyBoardPlugin = this.inputPlugin.keyboard
+      ? this.inputPlugin.keyboard
+      : new Input.Keyboard.KeyboardPlugin(this.inputPlugin);
+    keyBoardPlugin.addCapture("W,S,A,D,E,SPACE,SHIFT,ESC");
+    console.log("Key down", keyBoardPlugin);
 
-      keyBoardPlugin.on('keydown', (event: KeyboardEvent)=> {
-      console.log('Key up', event);
+    keyBoardPlugin.on("keydown", (event: KeyboardEvent) => {
+      console.log("Key up", event);
       this.handleKey(event, true);
-    })
+    });
 
-    keyBoardPlugin.on('keydown', (event: KeyboardEvent)=> {
-      console.log('Key up', event);
+    keyBoardPlugin.on("keydown", (event: KeyboardEvent) => {
+      console.log("Key up", event);
       this.handleKey(event, false);
-    })
+    });
   }
 
   handleKey(event: KeyboardEvent, state: boolean) {
     const keyName = event.key;
-    if (keyName === 'W') {
+    if (keyName === "W") {
       this.movement.up = state;
     }
-    if (keyName === 'S') {
+    if (keyName === "S") {
       this.movement.crouch = state;
     }
-    if (keyName === 'A') {
+    if (keyName === "A") {
       this.movement.left = state;
     }
-    if (keyName === 'D') {
+    if (keyName === "D") {
       this.movement.right = state;
     }
-    if (keyName === 'E') {
+    if (keyName === "E") {
       this.movement.use = state;
     }
-    if (keyName === 'SPACE') {
+    if (keyName === "SPACE") {
       this.movement.jump = state;
     }
-    if (keyName === 'SHIFT') {
+    if (keyName === "SHIFT") {
       this.movement.run = state;
     }
-    if (keyName === 'ESC') {
+    if (keyName === "ESC") {
       this.movement.pause = state;
     }
   }

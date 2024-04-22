@@ -55,7 +55,8 @@ export default class World extends Scene {
     });
   }
 
-  create() {
+  create(data: any) {
+    data.setSceneAtGameStateManager(this);
     console.debug("data is", this.worldSettings);
 
     if (!this.worldSettings || !(this.worldSettings instanceof WorldSetting)) {
