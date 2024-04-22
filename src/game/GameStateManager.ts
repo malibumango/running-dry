@@ -6,6 +6,7 @@ import Controls from "./player/controls";
 import Player from "./player/player";
 import WorldSetting from "./world/settings/WorldSetting";
 import { Scene } from "phaser";
+import Movement from "./player/movement";
 
 export const SPRITE_SIZE_X = 64;
 export const SPRITE_SIZE_Y = 64;
@@ -33,22 +34,17 @@ export default class GameStateManager {
     this.game.scene.remove(currentScene);
     if (!this.game.scene.getScene(nextScene)) {
       const sceneToLoad = sceneMap.filter((scene) => scene.key === nextScene)[0];
-      console.debug("Custom settings are", customSettings);
-      this.game.scene.add(sceneToLoad.key, sceneToLoad.scene, true, customSettings);
-    }
-    this.game.scene.start(nextScene, {
-      enableControls: (scene: Scene) => {
-        this.currentScene = scene;
-        this.controls = new Controls(this.currentScene?.input);
-        this.mfplayer = new Player(MAX_ENERGY, MAX_ENERGY);
-        this.game.loop.callback = () => {
-          if (this.controls && this.mfplayer) {
-            const move = this.controls.getMovement();
+      this.game.scene.add(sceneToLoad.key, sceneToLoad.scene, true, {
+        world: customSettings,
+        onMovement: (move: Movement) => {
+          // console.log(move);
+          if (this.mfplayer) {
             this.mfplayer.applyMovement(move);
           }
-        };
-      },
-    });
+        },
+      });
+    }
+    this.game.scene.start(nextScene);
   }
 
   public startGame(currentScene: string) {

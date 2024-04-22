@@ -16,44 +16,42 @@ export default class Controls {
     const keyBoardPlugin = this.inputPlugin.keyboard
       ? this.inputPlugin.keyboard
       : new Input.Keyboard.KeyboardPlugin(this.inputPlugin);
-    keyBoardPlugin.addCapture("W,S,A,D,E,SPACE,SHIFT,ESC");
-    console.log("Key down", keyBoardPlugin);
+    keyBoardPlugin.addCapture("W,S,A,D,E,SPACE,Shift,Escape");
 
     keyBoardPlugin.on("keydown", (event: KeyboardEvent) => {
-      console.log("Key up", event);
       this.handleKey(event, true);
     });
 
-    keyBoardPlugin.on("keydown", (event: KeyboardEvent) => {
-      console.log("Key up", event);
+    keyBoardPlugin.on("keyup", (event: any) => {
       this.handleKey(event, false);
     });
   }
 
   handleKey(event: KeyboardEvent, state: boolean) {
     const keyName = event.key;
-    if (keyName === "W") {
+    console.log("event is", event);
+    if (keyName === "w") {
       this.movement.up = state;
     }
-    if (keyName === "S") {
+    if (keyName === "s") {
       this.movement.crouch = state;
     }
-    if (keyName === "A") {
+    if (keyName === "a") {
       this.movement.left = state;
     }
-    if (keyName === "D") {
+    if (keyName === "d") {
       this.movement.right = state;
     }
-    if (keyName === "E") {
+    if (keyName === "e") {
       this.movement.use = state;
     }
-    if (keyName === "SPACE") {
+    if (keyName === "space") {
       this.movement.jump = state;
     }
-    if (keyName === "SHIFT") {
+    if (keyName === "Shift") {
       this.movement.run = state;
     }
-    if (keyName === "ESC") {
+    if (keyName === "Escape") {
       this.movement.pause = state;
     }
   }

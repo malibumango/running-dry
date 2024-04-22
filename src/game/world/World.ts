@@ -2,6 +2,8 @@ import { Scene } from "phaser";
 import GameStateManager from "../GameStateManager";
 import WorldSetting from "./settings/WorldSetting";
 import Level from "./Level";
+import Controls from "../player/controls";
+import Movement from "../player/movement";
 
 export default class World extends Scene {
   public static SCENE_KEY = "World";
@@ -9,8 +11,11 @@ export default class World extends Scene {
   private worldSettings: WorldSetting | undefined;
 
   private currentLevel: number;
+  private controls: Controls | undefined;
 
   private levels: Array<Level> = [];
+
+  private onMovement: ((movement: Movement) => void) | undefined;
 
   constructor() {
     super(World.SCENE_KEY);
@@ -48,17 +53,24 @@ export default class World extends Scene {
     this.loadLevel(++this.currentLevel);
   }
 
-  init(data: WorldSetting) {
-    this.worldSettings = data;
+  init(data: { world: WorldSetting; onMovement: (movement: Movement) => void }) {
+    console.debug("Data is", data);
+    this.worldSettings = data.world;
     this.worldSettings.level.forEach((levelSetting) => {
       this.levels.push(new Level(levelSetting, this));
     });
+    this.controls = new Controls(this.input);
+    this.onMovement = data.onMovement;
   }
 
-  create(data: any) {
-    console.debug("data is", data);
-    data.enableControls(this);
+  update() {
+    if (this.controls && this.onMovement) {
+      const move = this.controls.getMovement();
+      this.onMovement(move);
+    }
+  }
 
+  create() {
     if (!this.worldSettings || !(this.worldSettings instanceof WorldSetting)) {
       this.returnToMainMenu();
     }
