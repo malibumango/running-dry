@@ -24,6 +24,7 @@ export default class GameStateManager {
   private constructor() {
     this.game = StartGame("game-container");
     this.worldSettings = this.getWorldSettings();
+    this.mfplayer = new Player(MAX_ENERGY, MAX_ENERGY);
   }
 
   /**

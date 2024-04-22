@@ -1,4 +1,4 @@
-import Movement from './movement';
+import Movement from "./movement";
 
 export default class Player {
   private maxEnergy: number;
@@ -14,6 +14,6 @@ export default class Player {
   }
 
   public applyMovement(move: Movement) {
-    console.log('movement', move);
+    // do movemento
   }
 }
