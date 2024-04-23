@@ -17,8 +17,6 @@ export default class GameStateManager {
   private game: Phaser.Game;
   private controls: Controls | undefined;
   private mfplayer: Player | undefined;
-  private currentScene: Scene | undefined;
-
   private worldSettings: WorldSetting;
 
   private constructor() {
@@ -30,11 +28,17 @@ export default class GameStateManager {
   /**
    * Dynamically loads and unloads a scene
    */
-  private switchScene(currentScene: string, nextScene: string, customSettings?: any) {
+  private switchScene(
+    currentScene: string,
+    nextScene: string,
+    customSettings?: any
+  ) {
     console.debug("Moving from", currentScene, "to", nextScene);
     this.game.scene.remove(currentScene);
     if (!this.game.scene.getScene(nextScene)) {
-      const sceneToLoad = sceneMap.filter((scene) => scene.key === nextScene)[0];
+      const sceneToLoad = sceneMap.filter(
+        (scene) => scene.key === nextScene
+      )[0];
       this.game.scene.add(sceneToLoad.key, sceneToLoad.scene, true, {
         world: customSettings,
         onMovement: (move: Movement) => {

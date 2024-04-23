@@ -31,6 +31,10 @@ export class Preloader extends Scene {
     this.load.image("sandLeft", "sand_left.png");
     this.load.image("sandRight", "sand_right.png");
     this.load.image("sandMiddle", "sand_middle.png");
+    this.load.spritesheet("batteryBoy", "Bboy_Victory.png", {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
   }
 
   create() {

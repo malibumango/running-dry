@@ -22,7 +22,12 @@ export default class Level {
 
   parseCollidables() {
     this.levelSettings.platforms.forEach((platformSetting, index) => {
-      const platform = new Platform(platformSetting.origin, platformSetting.texture, this.scene, platformSetting.area);
+      const platform = new Platform(
+        platformSetting.origin,
+        platformSetting.texture,
+        this.scene,
+        platformSetting.area
+      );
       // platform.name = `platform${index}`;
       this.collidables.push(platform);
     });

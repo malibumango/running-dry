@@ -38,7 +38,9 @@ export default class World extends Scene {
 
   getTotalChargeStations() {
     if (this.levels && this.levels !== undefined) {
-      return this.levels.map((levels) => levels.getAmountChargeStations()).reduce((previous, now) => previous + now, 0);
+      return this.levels
+        .map((levels) => levels.getAmountChargeStations())
+        .reduce((previous, now) => previous + now, 0);
     }
     return 0;
   }
@@ -53,7 +55,10 @@ export default class World extends Scene {
     this.loadLevel(++this.currentLevel);
   }
 
-  init(data: { world: WorldSetting; onMovement: (movement: Movement) => void }) {
+  init(data: {
+    world: WorldSetting;
+    onMovement: (movement: Movement) => void;
+  }) {
     console.debug("Data is", data);
     this.worldSettings = data.world;
     this.worldSettings.level.forEach((levelSetting) => {
