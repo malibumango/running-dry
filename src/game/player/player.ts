@@ -25,8 +25,10 @@ export default class Player {
       }
       if (left) {
         this.sprite.setVelocityX(-moveSpeed);
+        this.sprite.anims.play("left", true);
       } else if (right) {
         this.sprite.setVelocityX(moveSpeed);
+        this.sprite.anims.play("right", true);
       }
       if (crouch && jump) {
         this.sprite.setVelocityX(-2 * moveSpeed);
