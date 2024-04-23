@@ -39,21 +39,27 @@ export default class GameStateManager {
       const sceneToLoad = sceneMap.filter(
         (scene) => scene.key === nextScene
       )[0];
-      this.game.scene.add(sceneToLoad.key, sceneToLoad.scene, true, {
-        world: customSettings,
-        onMovement: (move: Movement) => {
-          // console.log(move);
-          if (this.mfplayer) {
-            this.mfplayer.applyMovement(move);
-          }
-        },
-      });
+      this.game.scene.add(
+        sceneToLoad.key,
+        sceneToLoad.scene,
+        true,
+        customSettings
+      );
     }
     this.game.scene.start(nextScene);
   }
 
   public startGame(currentScene: string) {
-    this.switchScene(currentScene, World.SCENE_KEY, this.worldSettings);
+    this.switchScene(currentScene, World.SCENE_KEY, {
+      world: this.worldSettings,
+      onMovement: (move: Movement) => {
+        // console.log(move);
+        if (this.mfplayer) {
+          this.mfplayer.applyMovement(move);
+        }
+      },
+      mfplayer: this.mfplayer,
+    });
   }
 
   public openMainMenu(currentScene: string) {

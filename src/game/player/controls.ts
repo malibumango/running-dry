@@ -45,7 +45,7 @@ export default class Controls {
     if (keyName === "e") {
       this.movement.use = state;
     }
-    if (keyName === "space") {
+    if (event.code === "Space") {
       this.movement.jump = state;
     }
     if (keyName === "Shift") {

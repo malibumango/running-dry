@@ -4,6 +4,7 @@ import WorldSetting from "./settings/WorldSetting";
 import Level from "./Level";
 import Controls from "../player/controls";
 import Movement from "../player/movement";
+import Player from "../player/player";
 
 export default class World extends Scene {
   public static SCENE_KEY = "World";
@@ -12,7 +13,7 @@ export default class World extends Scene {
 
   private currentLevel: number;
   private controls: Controls | undefined;
-
+  private mfplayer: Player | undefined;
   private levels: Array<Level> = [];
 
   private onMovement: ((movement: Movement) => void) | undefined;
@@ -58,6 +59,7 @@ export default class World extends Scene {
   init(data: {
     world: WorldSetting;
     onMovement: (movement: Movement) => void;
+    mfplayer: Player;
   }) {
     console.debug("Data is", data);
     this.worldSettings = data.world;
@@ -66,6 +68,7 @@ export default class World extends Scene {
     });
     this.controls = new Controls(this.input);
     this.onMovement = data.onMovement;
+    this.mfplayer = data.mfplayer;
   }
 
   update() {
@@ -88,6 +91,8 @@ export default class World extends Scene {
       strokeThickness: 4,
       align: "center",
     });
+
+    this.mfplayer?.loadSprite(this.physics);
     text.setInteractive();
     text.on("pointerdown", () => {
       GameStateManager.getInstance().openMainMenu(World.SCENE_KEY);
