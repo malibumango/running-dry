@@ -41,6 +41,33 @@ export default class Player {
 
   public loadSprite(physics: Phaser.Physics.Arcade.ArcadePhysics) {
     this.sprite = physics.add.sprite(32, 32, "batteryBoy");
+
+    this.sprite.anims.create({
+      key: "left",
+      frames: this.sprite.anims.generateFrameNumbers("batteryBoy", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.sprite.anims.create({
+      key: "turn",
+      frames: [{ key: "batteryBoy", frame: 3 }],
+      frameRate: 20,
+    });
+
+    this.sprite.anims.create({
+      key: "right",
+      frames: this.sprite.anims.generateFrameNumbers("batteryBoy", {
+        start: 4,
+        end: 7,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
     this.sprite.setBounce(0.2);
     this.sprite.setCollideWorldBounds(true);
     return this.sprite;
