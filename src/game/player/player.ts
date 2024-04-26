@@ -1,11 +1,11 @@
 import Movement from "./movement";
 
-const DEFAULT_MOVE_SPEED = 50;
+const DEFAULT_MOVE_SPEED = 100;
 
 export default class Player {
   private maxEnergy: number;
   private currentEnergy: number;
-  private sprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | undefined;
+  public sprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | undefined;
 
   constructor(maxEnergy: number, currentEnergy: number) {
     this.maxEnergy = maxEnergy;
@@ -25,9 +25,11 @@ export default class Player {
       }
       if (left) {
         this.sprite.setVelocityX(-moveSpeed);
+        this.sprite.flipX = true;
         this.sprite.anims.play("left", true);
       } else if (right) {
         this.sprite.setVelocityX(moveSpeed);
+        this.sprite.flipX = false;
         this.sprite.anims.play("right", true);
       } else {
         this.sprite.setVelocityX(0);
@@ -44,7 +46,6 @@ export default class Player {
 
   public loadSprite(physics: Phaser.Physics.Arcade.ArcadePhysics) {
     this.sprite = physics.add.sprite(32, 32, "batteryBoy");
-
     this.sprite.anims.create({
       key: "left",
       frames: this.sprite.anims.generateFrameNumbers("batteryBoy", {
@@ -52,7 +53,7 @@ export default class Player {
         end: 3,
       }),
       frameRate: 10,
-      repeat: -1,
+      repeat: 0,
     });
 
     this.sprite.anims.create({
@@ -65,10 +66,10 @@ export default class Player {
       key: "right",
       frames: this.sprite.anims.generateFrameNumbers("batteryBoy", {
         start: 4,
-        end: 7,
+        end: 1,
       }),
       frameRate: 10,
-      repeat: -1,
+      repeat: 0,
     });
 
     this.sprite.setBounce(0.2);

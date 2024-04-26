@@ -62,13 +62,13 @@ export default class World extends Scene {
     mfplayer: Player;
   }) {
     console.debug("Data is", data);
+    this.mfplayer = data.mfplayer;
     this.worldSettings = data.world;
     this.worldSettings.level.forEach((levelSetting) => {
-      this.levels.push(new Level(levelSetting, this));
+      this.levels.push(new Level(levelSetting, this, data.mfplayer));
     });
     this.controls = new Controls(this.input);
     this.onMovement = data.onMovement;
-    this.mfplayer = data.mfplayer;
   }
 
   update() {
