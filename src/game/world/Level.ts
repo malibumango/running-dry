@@ -26,31 +26,36 @@ export default class Level {
 
   parseCollidables() {
     this.platformGroup = this.scene.physics.add.staticGroup({
-      // name: "platformGroup",
-      // classType: Phaser.GameObjects.Image,
+      name: "platformGroup",
     });
     this.levelSettings.platforms.forEach((platformSetting, index) => {
-      const platform = new Platform(
-        platformSetting.origin,
-        platformSetting.texture,
-        this.platformGroup!,
-        platformSetting.area
-      );
-      // platform.name = `platform${index}`;
-      this.collidables.push(platform);
-      if (this.mfplayer.sprite && this.platformGroup) {
-        this.scene.physics.add.collider(
-          this.mfplayer.sprite,
-          this.platformGroup
+      if (this.platformGroup) {
+        const platform = new Platform(
+          platformSetting.origin,
+          platformSetting.texture,
+          platformSetting.area,
+          this.scene
         );
+        // platform.name = `platform${index}`;
+        this.collidables.push(platform);
+      } else {
+        console.error("No platform group found");
       }
     });
   }
 
   createCollidables() {
+    const children: Phaser.Types.Physics.Arcade.ImageWithStaticBody[] = [];
     this.collidables.forEach((collidable) => {
-      collidable.render();
+      children.push(collidable.render());
     });
+
+    this.platformGroup = this.scene.physics.add.staticGroup(children, {
+      name: "platformGroup",
+    });
+    if (this.mfplayer.sprite && this.platformGroup) {
+      this.scene.physics.add.collider(this.mfplayer.sprite, this.platformGroup);
+    }
   }
   createInteractables() {}
   createEnemies() {}
