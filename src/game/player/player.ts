@@ -6,6 +6,7 @@ export default class Player {
   private maxEnergy: number;
   private currentEnergy: number;
   public sprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | undefined;
+  public canJump: boolean = false;
 
   constructor(maxEnergy: number, currentEnergy: number) {
     this.maxEnergy = maxEnergy;
@@ -38,8 +39,9 @@ export default class Player {
         this.sprite.setVelocityX(-2 * moveSpeed);
         this.sprite.stop();
       }
-      if (jump) {
-        this.sprite.setVelocityY(-moveSpeed);
+      if (jump && this.canJump) {
+        this.canJump = false;
+        this.sprite.setVelocityY(-moveSpeed * 3);
       }
     }
   }
