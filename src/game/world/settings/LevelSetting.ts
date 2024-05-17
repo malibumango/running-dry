@@ -26,17 +26,17 @@ export default class LevelSetting {
         texture: "sandMiddle",
       },
       {
-        origin: new Phaser.Math.Vector2(200, 768 - 64),
+        origin: new Phaser.Math.Vector2(300, 768 - 64),
         area: new Phaser.Math.Vector2(100, 64),
         texture: "sandMiddle",
       },
       {
-        origin: new Phaser.Math.Vector2(150, 668 - 64),
+        origin: new Phaser.Math.Vector2(200, 668 - 64),
         area: new Phaser.Math.Vector2(50, 64),
         texture: "sandMiddle",
       },
       {
-        origin: new Phaser.Math.Vector2(250, 668 - 64),
+        origin: new Phaser.Math.Vector2(350, 668 - 64),
         area: new Phaser.Math.Vector2(100, 1),
         texture: "sandMiddle",
       },

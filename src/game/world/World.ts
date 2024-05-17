@@ -2,6 +2,9 @@ import { Scene } from "phaser";
 import GameStateManager from "../GameStateManager";
 import WorldSetting from "./settings/WorldSetting";
 import Level from "./Level";
+import Controls from "../player/controls";
+import Movement from "../player/movement";
+import Player from "../player/player";
 
 export default class World extends Scene {
   public static SCENE_KEY = "World";
@@ -9,8 +12,11 @@ export default class World extends Scene {
   private worldSettings: WorldSetting | undefined;
 
   private currentLevel: number;
-
+  private controls: Controls | undefined;
+  private mfplayer: Player | undefined;
   private levels: Array<Level> = [];
+
+  private onMovement: ((movement: Movement) => void) | undefined;
 
   constructor() {
     super(World.SCENE_KEY);
@@ -33,7 +39,9 @@ export default class World extends Scene {
 
   getTotalChargeStations() {
     if (this.levels && this.levels !== undefined) {
-      return this.levels.map((levels) => levels.getAmountChargeStations()).reduce((previous, now) => previous + now, 0);
+      return this.levels
+        .map((levels) => levels.getAmountChargeStations())
+        .reduce((previous, now) => previous + now, 0);
     }
     return 0;
   }
@@ -48,16 +56,29 @@ export default class World extends Scene {
     this.loadLevel(++this.currentLevel);
   }
 
-  init(data: WorldSetting) {
-    this.worldSettings = data;
+  init(data: {
+    world: WorldSetting;
+    onMovement: (movement: Movement) => void;
+    mfplayer: Player;
+  }) {
+    console.debug("Data is", data);
+    this.mfplayer = data.mfplayer;
+    this.worldSettings = data.world;
     this.worldSettings.level.forEach((levelSetting) => {
-      this.levels.push(new Level(levelSetting, this));
+      this.levels.push(new Level(levelSetting, this, data.mfplayer));
     });
+    this.controls = new Controls(this.input);
+    this.onMovement = data.onMovement;
+  }
+
+  update() {
+    if (this.controls && this.onMovement) {
+      const move = this.controls.getMovement();
+      this.onMovement(move);
+    }
   }
 
   create() {
-    console.debug("data is", this.worldSettings);
-
     if (!this.worldSettings || !(this.worldSettings instanceof WorldSetting)) {
       this.returnToMainMenu();
     }
@@ -70,6 +91,8 @@ export default class World extends Scene {
       strokeThickness: 4,
       align: "center",
     });
+
+    this.mfplayer?.loadSprite(this.physics);
     text.setInteractive();
     text.on("pointerdown", () => {
       GameStateManager.getInstance().openMainMenu(World.SCENE_KEY);

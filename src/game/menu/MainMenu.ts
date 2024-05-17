@@ -8,10 +8,6 @@ export class MainMenu extends Menu {
 
   constructor() {
     super(MainMenu.SCENE_KEY, "background", "Main Menu");
-  }
-
-  create() {
-    this.logo = this.add.image(512, 300, "logo").setDepth(100);
 
     this.menuPoints.push({
       title: "Start Game",
@@ -26,7 +22,7 @@ export class MainMenu extends Menu {
       origin: 0.5,
       depth: 100,
       onClick: () => {
-        this.changeSceneToGameOverMenu();
+        this.changeSceneToGame();
       },
     });
 
@@ -63,7 +59,10 @@ export class MainMenu extends Menu {
         this.changeSceneToGameOverMenu();
       },
     });
+  }
 
+  create() {
+    this.logo = this.add.image(512, 300, "logo").setDepth(100);
     this.addAllMenuPoints();
   }
 

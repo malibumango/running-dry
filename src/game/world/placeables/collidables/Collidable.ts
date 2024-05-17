@@ -3,18 +3,12 @@ import Placeable from "../Placeables";
 export default abstract class Collidable implements Placeable {
   origin: Phaser.Math.Vector2;
   texture: string;
-  scene: Phaser.Scene;
 
-  abstract render(): void;
+  abstract render(): Phaser.Types.Physics.Arcade.ImageWithStaticBody;
   abstract unrender(): void;
 
-  constructor(
-    origin: Phaser.Math.Vector2,
-    texture: string,
-    scene: Phaser.Scene
-  ) {
+  constructor(origin: Phaser.Math.Vector2, texture: string) {
     this.origin = origin;
     this.texture = texture;
-    this.scene = scene;
   }
 }
