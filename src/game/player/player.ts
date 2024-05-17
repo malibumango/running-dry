@@ -1,12 +1,14 @@
 import Movement from "./movement";
 
 const DEFAULT_MOVE_SPEED = 100;
+const SPRITE_SIZE = 64;
 
 export default class Player {
   private maxEnergy: number;
   private currentEnergy: number;
   public sprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | undefined;
   public canJump: boolean = false;
+  private isCrouching: boolean = false;
 
   constructor(maxEnergy: number, currentEnergy: number) {
     this.maxEnergy = maxEnergy;
@@ -36,10 +38,23 @@ export default class Player {
         this.sprite.setVelocityX(0);
       }
       if (crouch && jump) {
-        this.sprite.setVelocityX(-2 * moveSpeed);
+        this.sprite.setVelocityX(4 * moveSpeed);
         this.sprite.stop();
       }
-      if (jump && this.canJump) {
+      if (crouch && this.canJump) {
+        if (!this.isCrouching) {
+          this.isCrouching = true;
+          this.sprite.scaleY = 0.5;
+          this.sprite.y += SPRITE_SIZE / 4;
+        }
+      } else {
+        if (this.isCrouching) {
+          this.isCrouching = false;
+          this.sprite.scaleY = 1;
+          this.sprite.y -= SPRITE_SIZE / 4;
+        }
+      }
+      if (!crouch && jump && this.canJump) {
         this.canJump = false;
         this.sprite.setVelocityY(-moveSpeed * 3);
       }

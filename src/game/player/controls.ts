@@ -29,7 +29,6 @@ export default class Controls {
 
   handleKey(event: KeyboardEvent, state: boolean) {
     const keyName = event.key;
-    console.log("event is", event);
     if (keyName === "w") {
       this.movement.up = state;
     }

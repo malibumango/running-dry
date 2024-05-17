@@ -54,23 +54,16 @@ export default class Level {
       name: "platformGroup",
     });
     if (this.mfplayer.sprite && this.platformGroup) {
-      this.scene.physics.add.collider(
-        this.mfplayer.sprite,
-        this.platformGroup,
-        (context: any) => {
-          let touchDown = false;
-          if ("body" in context) {
-            touchDown = (
-              context as Phaser.Types.Physics.Arcade.GameObjectWithBody
-            ).body.touching.down;
-          }
-          if (touchDown) this.mfplayer.canJump = true;
-          console.log(context);
-          setTimeout(() => {
-            this.mfplayer.canJump = false;
-          }, 250);
+      this.scene.physics.add.collider(this.mfplayer.sprite, this.platformGroup, (context: any) => {
+        let touchDown = false;
+        if ("body" in context) {
+          touchDown = (context as Phaser.Types.Physics.Arcade.GameObjectWithBody).body.touching.down;
         }
-      );
+        if (touchDown) this.mfplayer.canJump = true;
+        setTimeout(() => {
+          this.mfplayer.canJump = false;
+        }, 250);
+      });
     }
   }
   createInteractables() {}
