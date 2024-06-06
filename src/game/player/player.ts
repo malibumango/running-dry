@@ -90,7 +90,8 @@ export default class Player {
     });
 
     this.sprite.setBounce(0.2);
-    this.sprite.setCollideWorldBounds(true);
+    this.sprite.setCollideWorldBounds(true, 0.4, 0.5, true);
+
     return this.sprite;
   }
 }

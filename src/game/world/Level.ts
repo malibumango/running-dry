@@ -5,6 +5,8 @@ import Collidable from "./placeables/collidables/Collidable";
 import Enemy from "./placeables/enemies/Enemy";
 import Platform from "./placeables/collidables/Platform";
 import Player from "../player/player";
+import GameStateManager from "../GameStateManager";
+import World from "./World";
 
 export default class Level {
   public interactives: Array<Interactable> = [];
@@ -69,6 +71,18 @@ export default class Level {
   createInteractables() {}
   createEnemies() {}
 
+  onWorldBounds() {
+    this.scene.physics.world.on('worldbounds', (body: any, up: boolean, down: boolean, left: boolean, right: boolean) =>
+      {
+          const { gameObject } = body;
+
+          if (up) { gameObject.setAngle(90); }
+          else if (down) { GameStateManager.getInstance().openGameOverMenu(World.SCENE_KEY) }
+          else if (left) { gameObject.setAngle(0); }
+          else if (right) { gameObject.setAngle(180); }
+      });
+  }
+
   getAmountChargeStations() {
     return this.levelSettings ? this.levelSettings.chargingStations.length : 0;
   }
@@ -77,5 +91,6 @@ export default class Level {
     this.createCollidables();
     this.createInteractables();
     this.createEnemies();
+    this.onWorldBounds();
   }
 }
