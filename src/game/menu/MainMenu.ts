@@ -63,7 +63,7 @@ export class MainMenu extends Menu {
 
   create() {
     this.logo = this.add.image(512, 300, "logo").setDepth(100);
-    this.addAllMenuPoints();
+    this.renderAllMenuPoints();
   }
 
   changeSceneToGameOverMenu() {

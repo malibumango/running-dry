@@ -45,24 +45,16 @@ export default class Menu extends Scene {
   }
 
   protected addTitle() {
-    return this.add
-      .text(512, 460, this.title, DEFAULT_TITLE)
-      .setOrigin(0.5)
-      .setDepth(100);
+    return this.add.text(512, 460, this.title, DEFAULT_TITLE).setOrigin(0.5).setDepth(100);
   }
 
-  protected addMenuPoint(
-    menuPointSettings: MenuPointSettings,
-    position: Phaser.Math.Vector2
-  ) {
+  protected renderMenuPoint(menuPointSettings: MenuPointSettings, position: Phaser.Math.Vector2) {
     const menuPoint = this.add
       .text(
         position.x,
         position.y,
         menuPointSettings.title,
-        menuPointSettings.textStyle
-          ? menuPointSettings.textStyle
-          : DEFAULT_STYLE
+        menuPointSettings.textStyle ? menuPointSettings.textStyle : DEFAULT_STYLE
       )
       .setOrigin(menuPointSettings.origin)
       .setDepth(menuPointSettings.depth);
@@ -75,14 +67,14 @@ export default class Menu extends Scene {
     }
   }
 
-  addAllMenuPoints() {
+  renderAllMenuPoints() {
     if (this.menuPoints && this.menuPoints.length > 0) {
       const oldPosition = new Phaser.Math.Vector2(500, 500);
       this.menuPoints.forEach((menuPoint) => {
         if (!menuPoint.textStyle) {
           menuPoint.textStyle = DEFAULT_STYLE;
         }
-        this.addMenuPoint(menuPoint, oldPosition);
+        this.renderMenuPoint(menuPoint, oldPosition);
         oldPosition.y += 38 + PADDING;
       });
     }

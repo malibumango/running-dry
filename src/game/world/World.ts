@@ -24,7 +24,7 @@ export default class World extends Scene {
   }
 
   private returnToMainMenu() {
-    this.add.text(100, 100, "No World Found. Click to go back to Main Menu", {
+    this.add.text(100, 100, "No World Found. Returning to Main Menu...", {
       fontFamily: "Arial Black",
       fontSize: 38,
       color: "#ffffff",
@@ -39,9 +39,7 @@ export default class World extends Scene {
 
   getTotalChargeStations() {
     if (this.levels && this.levels !== undefined) {
-      return this.levels
-        .map((levels) => levels.getAmountChargeStations())
-        .reduce((previous, now) => previous + now, 0);
+      return this.levels.map((levels) => levels.getAmountChargeStations()).reduce((previous, now) => previous + now, 0);
     }
     return 0;
   }
@@ -53,17 +51,15 @@ export default class World extends Scene {
   }
 
   private loadNextLevel() {
-    this.loadLevel(++this.currentLevel);
+    this.loadLevel(this.currentLevel);
+    this.currentLevel += 1;
   }
 
-  init(data: {
-    world: WorldSetting;
-    onMovement: (movement: Movement) => void;
-    mfplayer: Player;
-  }) {
+  init(data: { world: WorldSetting; onMovement: (movement: Movement) => void; mfplayer: Player }) {
     console.debug("Data is", data);
     this.mfplayer = data.mfplayer;
     this.worldSettings = data.world;
+    // TODO Might be dangerous when we game over
     this.worldSettings.level.forEach((levelSetting) => {
       this.levels.push(new Level(levelSetting, this, data.mfplayer));
     });
@@ -71,6 +67,7 @@ export default class World extends Scene {
     this.onMovement = data.onMovement;
   }
 
+  // Phaser internal method called each frame
   update() {
     if (this.controls && this.onMovement) {
       const move = this.controls.getMovement();
@@ -91,12 +88,12 @@ export default class World extends Scene {
       strokeThickness: 4,
       align: "center",
     });
-
-    this.mfplayer?.loadSprite(this.physics);
     text.setInteractive();
     text.on("pointerdown", () => {
       GameStateManager.getInstance().openMainMenu(World.SCENE_KEY);
     });
+
+    this.mfplayer?.loadSprite(this.physics);
 
     this.loadNextLevel();
   }

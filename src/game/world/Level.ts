@@ -27,9 +27,6 @@ export default class Level {
   }
 
   parseCollidables() {
-    this.platformGroup = this.scene.physics.add.staticGroup({
-      name: "platformGroup",
-    });
     this.levelSettings.platforms.forEach((platformSetting, index) => {
       if (this.platformGroup) {
         const platform = new Platform(
@@ -47,12 +44,12 @@ export default class Level {
   }
 
   createCollidables() {
-    const children: Phaser.Types.Physics.Arcade.ImageWithStaticBody[] = [];
+    const actualCollidables: Phaser.Types.Physics.Arcade.ImageWithStaticBody[] = [];
     this.collidables.forEach((collidable) => {
-      children.push(collidable.render());
+      actualCollidables.push(collidable.render());
     });
 
-    this.platformGroup = this.scene.physics.add.staticGroup(children, {
+    this.platformGroup = this.scene.physics.add.staticGroup(actualCollidables, {
       name: "platformGroup",
     });
     if (this.mfplayer.sprite && this.platformGroup) {
@@ -68,19 +65,27 @@ export default class Level {
       });
     }
   }
+
   createInteractables() {}
   createEnemies() {}
 
   onWorldBounds() {
-    this.scene.physics.world.on('worldbounds', (body: any, up: boolean, down: boolean, left: boolean, right: boolean) =>
-      {
-          const { gameObject } = body;
+    this.scene.physics.world.on(
+      "worldbounds",
+      (body: any, up: boolean, down: boolean, left: boolean, right: boolean) => {
+        const { gameObject } = body;
 
-          if (up) { gameObject.setAngle(90); }
-          else if (down) { GameStateManager.getInstance().openGameOverMenu(World.SCENE_KEY) }
-          else if (left) { gameObject.setAngle(0); }
-          else if (right) { gameObject.setAngle(180); }
-      });
+        if (up) {
+          gameObject.setAngle(90);
+        } else if (down) {
+          GameStateManager.getInstance().openGameOverMenu(World.SCENE_KEY);
+        } else if (left) {
+          gameObject.setAngle(0);
+        } else if (right) {
+          gameObject.setAngle(180);
+        }
+      }
+    );
   }
 
   getAmountChargeStations() {

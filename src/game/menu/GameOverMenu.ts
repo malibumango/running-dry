@@ -1,23 +1,23 @@
-import { GameObjects } from 'phaser';
-import Menu from './Menu';
-import GameStateManager from '../GameStateManager';
+import { GameObjects } from "phaser";
+import Menu from "./Menu";
+import GameStateManager from "../GameStateManager";
 
 export class GameOverMenu extends Menu {
-  static SCENE_KEY = 'GameOverMenu';
+  static SCENE_KEY = "GameOverMenu";
   private logo: GameObjects.Image | undefined;
 
   constructor() {
-    super(GameOverMenu.SCENE_KEY, 'background', 'Game Over Menu');
+    super(GameOverMenu.SCENE_KEY, "background", "Game Over Menu");
 
     this.menuPoints.push({
-      title: 'Continue',
+      title: "Continue",
       textStyle: {
-        fontFamily: 'Arial Black',
+        fontFamily: "Arial Black",
         fontSize: 38,
-        color: '#ffffff',
-        stroke: '#000000',
+        color: "#ffffff",
+        stroke: "#000000",
         strokeThickness: 4,
-        align: 'center',
+        align: "center",
       },
       origin: 0.5,
       depth: 100,
@@ -27,14 +27,14 @@ export class GameOverMenu extends Menu {
     });
 
     this.menuPoints.push({
-      title: 'Restart Level',
+      title: "Restart Level",
       textStyle: {
-        fontFamily: 'Arial Black',
+        fontFamily: "Arial Black",
         fontSize: 38,
-        color: '#ffffff',
-        stroke: '#000000',
+        color: "#ffffff",
+        stroke: "#000000",
         strokeThickness: 4,
-        align: 'center',
+        align: "center",
       },
       origin: 0.5,
       depth: 100,
@@ -44,14 +44,14 @@ export class GameOverMenu extends Menu {
     });
 
     this.menuPoints.push({
-      title: 'Back to Main Menu',
+      title: "Back to Main Menu",
       textStyle: {
-        fontFamily: 'Arial Black',
+        fontFamily: "Arial Black",
         fontSize: 38,
-        color: '#ffffff',
-        stroke: '#000000',
+        color: "#ffffff",
+        stroke: "#000000",
         strokeThickness: 4,
-        align: 'center',
+        align: "center",
       },
       origin: 0.5,
       depth: 100,
@@ -62,8 +62,8 @@ export class GameOverMenu extends Menu {
   }
 
   create() {
-    this.logo = this.add.image(512, 300, 'logo').setDepth(100);
-    this.addAllMenuPoints();
+    this.logo = this.add.image(512, 300, "logo").setDepth(100);
+    this.renderAllMenuPoints();
   }
 
   changeSceneToMainMenu() {

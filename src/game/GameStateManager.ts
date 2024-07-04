@@ -28,24 +28,18 @@ export default class GameStateManager {
   /**
    * Dynamically loads and unloads a scene
    */
-  private switchScene(
-    currentScene: string,
-    nextScene: string,
-    customSettings?: any
-  ) {
+  private switchScene(currentScene: string, nextScene: string, customSettings?: any) {
     console.debug("Moving from", currentScene, "to", nextScene);
+    // Remove current scene
     this.game.scene.remove(currentScene);
+    // If we don't find the scene manager
     if (!this.game.scene.getScene(nextScene)) {
-      const sceneToLoad = sceneMap.filter(
-        (scene) => scene.key === nextScene
-      )[0];
-      this.game.scene.add(
-        sceneToLoad.key,
-        sceneToLoad.scene,
-        true,
-        customSettings
-      );
+      // Search for the scene in our lookup table
+      const sceneToLoad = sceneMap.filter((scene) => scene.key === nextScene)[0];
+      // Add the scene to the scene manager
+      this.game.scene.add(sceneToLoad.key, sceneToLoad.scene, true, customSettings);
     }
+    // Start the scene
     this.game.scene.start(nextScene);
   }
 
